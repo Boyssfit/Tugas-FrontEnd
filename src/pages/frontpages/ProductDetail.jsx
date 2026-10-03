@@ -1,112 +1,86 @@
-//use location to get state passed from Link
-import { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useCart } from "../../utils/CartContext";
+import { services } from "../../utils/data";
+
+const formatPrice = (price) =>
+  new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(price);
 
 export default function ProductDetail() {
-  {/* Mengambil ID produk dari URL */ }
   const { id } = useParams();
-  // Mengambil state yang dikirim dari Link
-  const location = useLocation();
-  // state adalah objek produk yang dikirim dari Link
-  const p = location.state;
-  // State untuk rating dan review
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState("");
-  const [reviews, setReviews] = useState([]);
-// Handle submit review
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!rating || !review.trim()) return;
-// Membuat objek review baru
-    const newReview = {
-      id: Date.now(),
-      rating,
-      review,
-    };
-// Menambahkan review baru ke daftar reviews
-    setReviews([...reviews, newReview]);
-    setRating(0);
-    setReview("");
-  };
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const service = services.find((item) => String(item.id) === id);
+
+  if (!service) {
+    return (
+      <section className="py-16 text-center">
+        <h1 className="font-serif text-3xl">Perawatan tidak ditemukan</h1>
+        <Link
+          to="/"
+          className="mt-4 inline-block text-sm text-[#8a674b] underline underline-offset-4"
+        >
+          Kembali ke pilihan perawatan
+        </Link>
+      </section>
+    );
+  }
 
   return (
-    <div className="p-6 space-y-6 flex gap-6">
-      <section className="flex-4 gap-6">
-        <div className="border rounded-lg p-4 shadow hover:shadow-lg">
-          <h1 className="text-2xl font-bold">{p.name}</h1>
-          <p className="mt-4">{p.price}</p>
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-3">User Reviews</h2>
-          {reviews.length === 0 ? (
-            <p className="text-gray-500">Belum ada review.</p>
-          ) : (
-            <ul className="space-y-4">
-              {reviews.map((r) => (
-                <li
-                  key={r.id}
-                  className="border rounded-lg p-4 bg-gray-50 shadow-sm"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    {/* Menampilkan bintang sesuai rating */}
-                    {[...Array(r.rating)].map((_, i) => (
-                      <span key={i} className="text-yellow-500">★</span>
-                    ))}
-                    {[...Array(5 - r.rating)].map((_, i) => (
-                      <span key={i} className="text-gray-300">★</span>
-                    ))}
-                  </div>
-                  <p className="text-gray-700">{r.review}</p>
+    <div>
+      <Link
+        to="/"
+        className="text-sm text-[#8a674b] underline underline-offset-4"
+      >
+        ← Semua perawatan
+      </Link>
+      <article className="mt-5 grid overflow-hidden border border-[#dedbce] bg-[#fbfaf6] lg:grid-cols-[1.05fr_0.95fr]">
+        <img
+          src={service.image}
+          alt={service.name}
+          className="h-full min-h-72 w-full object-cover lg:min-h-[560px]"
+        />
+        <div className="flex flex-col justify-center p-6 sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#8a795f]">
+            {service.category} · {service.duration} menit
+          </p>
+          <h1 className="mt-3 font-serif text-4xl leading-tight">
+            {service.name}
+          </h1>
+          <p className="mt-5 text-base leading-7 text-[#697166]">
+            {service.description}
+          </p>
+          <div className="mt-7 border-y border-[#e5e2d6] py-5">
+            <h2 className="text-sm font-semibold">Termasuk dalam perawatan</h2>
+            <ul className="mt-3 space-y-2 text-sm text-[#697166]">
+              {service.includes.map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span className="text-[#87917a]">•</span>
+                  {item}
                 </li>
               ))}
             </ul>
-          )}
+          </div>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+            <span className="font-serif text-2xl text-[#536b56]">
+              {formatPrice(service.price)}
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                addToCart(service);
+                navigate("/cart");
+              }}
+              className="min-h-12 bg-[#536b56] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#405443]"
+            >
+              Simpan ke Saved
+            </button>
+          </div>
         </div>
-      </section>
-      <section className="border rounded-lg p-4 shadow hover:shadow-lg flex-1">
-        <h2 className="text-xl font-semibold mt-6">Reviews</h2>
-        {/* Form Rating & Review */}
-        <form onSubmit={handleSubmit} className="mb-6">
-          <div className="mb-4">
-            <label className="block text-lg font-medium mb-2">Rating:</label>
-            <div className="flex gap-2">
-              {/* Menampilkan 5 bintang untuk rating */}
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  type="button"
-                  key={star}
-                  onClick={() => setRating(star)}
-                  className={`text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
-                    }`}
-                >
-                  ★
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-lg font-medium mb-2">Review:</label>
-            {/* Textarea untuk review */}
-            <textarea
-              value={review}
-              // Menampilkan textarea untuk review
-              onChange={(e) => setReview(e.target.value)}
-              className="w-full border rounded-lg p-3"
-              rows="3"
-              placeholder="Tulis pengalaman Anda..."
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-          >
-            Submit
-          </button>
-        </form>
-      </section>
-
+      </article>
     </div>
   );
 }

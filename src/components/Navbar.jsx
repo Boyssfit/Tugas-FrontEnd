@@ -1,41 +1,57 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useCart } from "../utils/CartContext";
-import { useAuth } from "../utils/AuthContext";
+
+const navLinkClass = ({ isActive }) =>
+  `border-b pb-1 transition-colors hover:text-[#9a7555] ${
+    isActive
+      ? "border-[#9a7555] text-[#536b56]"
+      : "border-transparent"
+  }`;
 
 export default function Navbar() {
-  // Mengambil totalQty dari context UseCart
   const { totalQty } = useCart();
-  const { user } = useAuth();
   return (
-    <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
-      {/* Logo */}
-      <Link to="/" className="font-bold text-xl">
-        MyShop
-      </Link>
-      {/* Menu Navigasi */}
-      <div className="flex gap-6">
-        {/* Dashboard Links */}
-        <Link to="/" className="hover:text-gray-200">
-          Dashboard
+    <nav className="border-b border-[#d8d4c5] bg-[#f8f7f0] text-[#293d32]">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <Link
+          to="/"
+          className="flex items-center gap-3"
+          aria-label="Aroma Spa & Wellness, beranda"
+        >
+          <span className="grid h-10 w-10 place-items-center rounded-full bg-[#536b56] text-sm font-semibold text-[#f8f7f0]">
+            AS
+          </span>
+          <span className="font-serif text-xl leading-tight">
+            Aroma Spa <span className="text-[#9a7555]">&</span> Wellness
+          </span>
         </Link>
-        <Link to="/cart" className="hover:text-gray-200">
-          Keranjang
-          {/* Menampilkan totalQty jika ada item di keranjang */}
-          {totalQty > 0 && (
-            <span className=" bg-red-500 text-xs px-2 rounded-full">
-              {totalQty}
-            </span>
-          )}
-        </Link>
-        <Link to="/checkout" className="hover:text-gray-200">
-          Checkout
-        </Link>
-        
-       {user ? <Link to="/logout">Logout</Link>
-       : <Link to="/login">Login</Link>
-       }
-
-
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
+          <NavLink to="/" end className={navLinkClass}>
+            Perawatan
+          </NavLink>
+          <NavLink
+            to="/cart"
+            className={(props) =>
+              `${navLinkClass(props)} inline-flex items-center gap-2`
+            }
+          >
+            Saved
+            {totalQty > 0 && (
+              <span className="grid h-5 min-w-5 place-items-center rounded-full bg-[#c77f54] px-1 text-xs text-white">
+                {totalQty}
+              </span>
+            )}
+          </NavLink>
+          <NavLink to="/checkout" className={navLinkClass}>
+            Jadwal
+          </NavLink>
+          <NavLink
+            to="/login"
+            className={navLinkClass}
+          >
+            Login
+          </NavLink>
+        </div>
       </div>
     </nav>
   );

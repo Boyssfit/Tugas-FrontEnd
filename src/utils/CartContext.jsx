@@ -1,19 +1,31 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    try {
+      const storedCart = localStorage.getItem("aroma-spa-booking");
+      const parsedCart = storedCart ? JSON.parse(storedCart) : [];
+      return Array.isArray(parsedCart) ? parsedCart : [];
+    } catch (error) {
+      console.error("Failed to load saved spa packages", error);
+      return [];
+    }
+  });
 
-  //  Tambah ke cart
-  const addToCart = (product,qty) => {
+  useEffect(() => {
+    try {
+      localStorage.setItem("aroma-spa-booking", JSON.stringify(cart));
+    } catch (error) {
+      console.error("Failed to save spa packages", error);
+    }
+  }, [cart]);
+
+  const addToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item
-        );
-      }
+      if (existing) return prev;
       return [...prev, { ...product, qty: 1 }];
     });
   };
@@ -22,8 +34,8 @@ export function CartProvider({ children }) {
   const updateQty = (id, qty) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, qty: Math.max(1, qty) } : item
-      )
+        item.id === id ? { ...item, qty: Math.max(1, qty) } : item,
+      ),
     );
   };
 
@@ -32,11 +44,20 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  const clearCart = () => setCart([]);
+
+  const totalQty = cart.length;
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, updateQty, removeFromCart, totalQty }}
+      value={{
+        cart,
+        addToCart,
+        updateQty,
+        removeFromCart,
+        clearCart,
+        totalQty,
+      }}
     >
       {children}
     </CartContext.Provider>
