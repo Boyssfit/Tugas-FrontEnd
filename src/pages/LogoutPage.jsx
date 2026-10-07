@@ -26,14 +26,14 @@ export default function LogoutPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-            <div className="w-full max-w-sm p-8 space-y-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+        <div className="min-h-screen flex items-center justify-center bg-surface dark:bg-dark-page px-4">
+            <div className="w-full max-w-sm p-8 space-y-6 bg-surface dark:bg-dark-surface rounded-xl shadow-lg border border-border dark:border-dark-border">
                 
-                <h2 className="text-3xl font-extrabold text-center text-gray-900 dark:text-white">
+                <h2 className="text-3xl font-extrabold text-center text-ink dark:text-dark-ink">
                     Sign Out
                 </h2>
                 
-                <p className="text-center text-gray-600 dark:text-gray-400">
+                <p className="text-center text-muted dark:text-dark-muted">
                     Are you sure you want to sign out of your account?
                 </p>
 
@@ -43,7 +43,7 @@ export default function LogoutPage() {
                     <button
                         type="button"
                         onClick={handleLogout}
-                        className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-red-400 disabled:cursor-not-allowed transition duration-200 ease-in-out"
+                        className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-danger hover:bg-danger-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger disabled:bg-danger-disabled disabled:cursor-not-allowed transition duration-200 ease-in-out"
                         disabled={isLoggingOut}
                     >
                         {isLoggingOut ? 'Signing out...' : 'Sign Out'}
@@ -53,7 +53,7 @@ export default function LogoutPage() {
                     <button
                         type="button"
                         onClick={handleCancel}
-                        className="w-full flex justify-center py-2.5 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-base font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                        className="w-full flex justify-center py-2.5 px-4 border border-border dark:border-dark-border rounded-lg shadow-sm text-base font-medium text-ink dark:text-dark-ink bg-surface dark:bg-dark-surface hover:bg-surface-muted dark:hover:bg-dark-surface focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50"
                         disabled={isLoggingOut}
                     >
                         Cancel

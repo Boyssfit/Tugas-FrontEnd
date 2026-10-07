@@ -49,21 +49,21 @@ export default function Checkout() {
 
   if (confirmation) {
     return (
-      <section className="mx-auto max-w-2xl border border-[#dedbce] bg-[#fbfaf6] px-6 py-12 text-center sm:px-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#8a795f]">
+      <section className="mx-auto max-w-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-12 text-center sm:px-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)]">
           Permintaan reservasi diterima
         </p>
         <h1 className="mt-3 font-serif text-3xl">
           Terima kasih, {confirmation.name}.
         </h1>
-        <p className="mt-4 text-sm leading-6 text-[#697166]">
+        <p className="mt-4 text-sm leading-6 text-[var(--color-muted)]">
           Permintaan reservasi untuk {confirmation.items} paket pada{" "}
           {confirmation.date}, pukul {confirmation.time} telah dicatat. Tim kami
           akan menghubungi Anda untuk konfirmasi ketersediaan.
         </p>
         <Link
           to="/"
-          className="mt-7 inline-flex min-h-11 items-center bg-[#536b56] px-5 text-sm font-semibold text-white hover:bg-[#405443]"
+          className="mt-7 inline-flex min-h-11 items-center bg-[var(--color-primary)] px-5 text-sm font-semibold text-white hover:bg-[var(--color-primary-hover)]"
         >
           Kembali ke perawatan
         </Link>
@@ -75,12 +75,12 @@ export default function Checkout() {
     return (
       <section className="py-16 text-center">
         <h1 className="font-serif text-3xl">Belum ada paket untuk dijadwalkan</h1>
-        <p className="mt-3 text-sm text-[#697166]">
+        <p className="mt-3 text-sm text-[var(--color-muted)]">
           Simpan paket spa yang Anda inginkan sebelum menentukan jadwal.
         </p>
         <Link
           to="/cart"
-          className="mt-6 inline-flex min-h-11 items-center bg-[#536b56] px-5 text-sm font-semibold text-white"
+          className="mt-6 inline-flex min-h-11 items-center bg-[var(--color-primary)] px-5 text-sm font-semibold text-white"
         >
           Lihat Saved
         </Link>
@@ -90,17 +90,17 @@ export default function Checkout() {
 
   return (
     <section className="mx-auto max-w-5xl">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#8a795f]">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)]">
         Jadwalkan kunjungan
       </p>
       <h1 className="mt-2 font-serif text-3xl">Form Reservasi</h1>
-      <p className="mt-2 text-sm text-[#697166]">
+      <p className="mt-2 text-sm text-[var(--color-muted)]">
         Tentukan tanggal dan jam kedatangan untuk paket spa pilihan Anda.
       </p>
       <div className="mt-7 grid gap-8 lg:grid-cols-[1fr_340px]">
         <form
           onSubmit={handleSubmit}
-          className="space-y-5 border-y border-[#dedbce] py-6"
+          className="space-y-5 border-y border-[var(--color-border)] py-6"
         >
           <div>
             <label
@@ -114,7 +114,7 @@ export default function Checkout() {
               name="name"
               required
               autoComplete="name"
-              className="min-h-11 w-full border border-[#d1cebf] bg-[#fbfaf6] px-3 text-sm outline-none focus:border-[#647b62]"
+              className="min-h-11 w-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm outline-none focus:border-[var(--color-primary)]"
               placeholder="Nama lengkap"
             />
           </div>
@@ -134,7 +134,7 @@ export default function Checkout() {
               inputMode="numeric"
               pattern="[0-9]{8,15}"
               title="Masukkan 8 sampai 15 digit nomor telepon tanpa spasi"
-              className="min-h-11 w-full border border-[#d1cebf] bg-[#fbfaf6] px-3 text-sm outline-none focus:border-[#647b62]"
+              className="min-h-11 w-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm outline-none focus:border-[var(--color-primary)]"
               placeholder="08xxxxxxxxxx"
             />
           </div>
@@ -152,7 +152,7 @@ export default function Checkout() {
                 type="date"
                 required
                 min={minimumDate}
-                className="min-h-11 w-full border border-[#d1cebf] bg-[#fbfaf6] px-3 text-sm outline-none focus:border-[#647b62]"
+                className="min-h-11 w-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm outline-none focus:border-[var(--color-primary)]"
               />
             </div>
             <div>
@@ -167,7 +167,7 @@ export default function Checkout() {
                 name="time"
                 required
                 defaultValue=""
-                className="min-h-11 w-full border border-[#d1cebf] bg-[#fbfaf6] px-3 text-sm outline-none focus:border-[#647b62]"
+                className="min-h-11 w-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm outline-none focus:border-[var(--color-primary)]"
               >
                 <option value="" disabled>
                   Pilih jam
@@ -182,14 +182,14 @@ export default function Checkout() {
           </div>
           <button
             type="submit"
-            className="min-h-12 w-full bg-[#536b56] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#405443] sm:w-auto"
+            className="min-h-12 w-full bg-[var(--color-primary)] px-5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)] sm:w-auto"
           >
             Kirim permintaan reservasi
           </button>
         </form>
-        <aside className="h-fit border border-[#dedbce] bg-[#fbfaf6] p-5">
+        <aside className="h-fit border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
           <h2 className="font-serif text-xl">Paket pilihan</h2>
-          <ul className="mt-4 divide-y divide-[#e5e2d6]">
+          <ul className="mt-4 divide-y divide-[var(--color-border)]">
             {cart.map((item) => (
               <li
                 key={item.id}
@@ -202,9 +202,9 @@ export default function Checkout() {
               </li>
             ))}
           </ul>
-          <div className="mt-2 flex justify-between border-t border-[#dedbce] pt-4 text-sm">
+          <div className="mt-2 flex justify-between border-t border-[var(--color-border)] pt-4 text-sm">
             <span>Perkiraan total</span>
-            <strong className="text-[#536b56]">{formatPrice(total)}</strong>
+            <strong className="text-[var(--color-primary)]">{formatPrice(total)}</strong>
           </div>
         </aside>
       </div>

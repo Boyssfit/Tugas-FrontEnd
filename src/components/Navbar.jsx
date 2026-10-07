@@ -2,27 +2,27 @@ import { Link, NavLink } from "react-router-dom";
 import { useCart } from "../utils/CartContext";
 
 const navLinkClass = ({ isActive }) =>
-  `border-b pb-1 transition-colors hover:text-[#9a7555] ${
+  `border-b pb-1 transition-colors hover:text-[var(--color-accent)] ${
     isActive
-      ? "border-[#9a7555] text-[#536b56]"
+      ? "border-[var(--color-accent)] text-[var(--color-primary)]"
       : "border-transparent"
   }`;
 
 export default function Navbar() {
   const { totalQty } = useCart();
   return (
-    <nav className="border-b border-[#d8d4c5] bg-[#f8f7f0] text-[#293d32]">
+    <nav className="border-b border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)]">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <Link
           to="/"
           className="flex items-center gap-3"
           aria-label="Aroma Spa & Wellness, beranda"
         >
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-[#536b56] text-sm font-semibold text-[#f8f7f0]">
+          <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--color-primary)] text-sm font-semibold text-[var(--color-surface)]">
             AS
           </span>
           <span className="font-serif text-xl leading-tight">
-            Aroma Spa <span className="text-[#9a7555]">&</span> Wellness
+            Aroma Spa <span className="text-[var(--color-accent)]">&</span> Wellness
           </span>
         </Link>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
@@ -37,7 +37,7 @@ export default function Navbar() {
           >
             Saved
             {totalQty > 0 && (
-              <span className="grid h-5 min-w-5 place-items-center rounded-full bg-[#c77f54] px-1 text-xs text-white">
+              <span className="grid h-5 min-w-5 place-items-center rounded-full bg-[var(--color-danger-disabled)] px-1 text-xs text-white">
                 {totalQty}
               </span>
             )}

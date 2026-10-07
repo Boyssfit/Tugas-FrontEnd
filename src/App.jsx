@@ -27,7 +27,6 @@ export default function App() {
           }
         />
       </Route>
-      {/* Admin Layout wrapper, pendekatan jika menggunakan Outlet pada JSX */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="about" element={<AboutPage />} />

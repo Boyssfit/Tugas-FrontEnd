@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 export const confirmDeleteToast = (onConfirm) => {
   toast((t) => (
     <div className="flex flex-col gap-3">
-      <p className="text-sm font-medium text-gray-800">
+      <p className="text-sm font-medium text-ink">
         Apakah kamu yakin ingin menghapus produk ini?
       </p>
       <div className="flex justify-end gap-2">
@@ -11,7 +11,7 @@ export const confirmDeleteToast = (onConfirm) => {
           onClick={() => {
             toast.dismiss(t.id);
           }}
-          className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs px-3 py-1 rounded-md"
+          className="bg-border hover:bg-border text-ink text-xs px-3 py-1 rounded-md"
         >
           Batal
         </button>
@@ -20,7 +20,7 @@ export const confirmDeleteToast = (onConfirm) => {
             onConfirm();
             toast.dismiss(t.id);
           }}
-          className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-md"
+          className="bg-danger hover:bg-danger-hover text-white text-xs px-3 py-1 rounded-md"
         >
           Hapus
         </button>

@@ -16,7 +16,7 @@ export default function ProductSearchBar({ onSearch, categories }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-white shadow-md rounded-xl p-4 mb-6 space-y-3 md:space-y-0">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-surface shadow-md rounded-xl p-4 mb-6 space-y-3 md:space-y-0">
       {/* Bagian Form Search */}
       <form
         onSubmit={handleSearch}
@@ -26,7 +26,7 @@ export default function ProductSearchBar({ onSearch, categories }) {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2 text-gray-700 w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-border rounded-lg p-2 text-ink w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-primary"
         >
           <option value="">Semua Kategori</option>
           {categories &&
@@ -43,13 +43,13 @@ export default function ProductSearchBar({ onSearch, categories }) {
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           placeholder="Cari produk..."
-          className="border border-gray-300 rounded-lg p-2 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-border rounded-lg p-2 flex-1 focus:outline-none focus:ring-2 focus:ring-primary"
         />
 
         {/* Tombol Cari */}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+          className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition duration-200"
         >
           Cari
         </button>
@@ -58,7 +58,7 @@ export default function ProductSearchBar({ onSearch, categories }) {
       {/* Tombol Tambah Produk */}
       <button
         onClick={handleAddProduct}
-        className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition duration-200 shadow-sm"
+        className="bg-success text-white px-5 py-2 rounded-lg hover:bg-success-hover transition duration-200 shadow-sm"
       >
         + Tambah Produk
       </button>

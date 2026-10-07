@@ -7,7 +7,7 @@ const EyeIcon = ({ onClick, isVisible }) => (
     <button
         type="button"
         onClick={onClick}
-        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+        className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted hover:text-muted dark:hover:text-dark-muted"
     >
         {isVisible ? (
             // Eye (visible)
@@ -67,13 +67,13 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-            <div className="w-full max-w-sm p-8 space-y-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+        <div className="min-h-screen flex items-center justify-center bg-surface dark:bg-dark-page px-4">
+            <div className="w-full max-w-sm p-8 space-y-6 bg-surface dark:bg-dark-surface rounded-xl shadow-lg border border-border dark:border-dark-border">
                 
-                <h2 className="text-3xl font-extrabold text-center text-gray-900 dark:text-white">
+                <h2 className="text-3xl font-extrabold text-center text-ink dark:text-dark-ink">
                     Welcome Back
                 </h2>
-                <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-center text-sm text-muted dark:text-dark-muted">
                     Sign in with your email and password.
                 </p>
 
@@ -81,7 +81,7 @@ export default function LoginPage() {
                     
                     {/* Error Message Display */}
                     {error && (
-                        <div className="p-3 text-center text-sm text-red-700 bg-red-50 dark:bg-red-900 dark:text-red-200 rounded-lg">
+                        <div className="p-3 text-center text-sm text-danger bg-danger-soft dark:bg-danger-dark dark:text-danger-soft-text rounded-lg">
                             {error}
                         </div>
                     )}
@@ -96,7 +96,7 @@ export default function LoginPage() {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out"
+                                className="w-full px-4 py-2.5 bg-surface dark:bg-dark-surface border border-border dark:border-dark-border rounded-lg shadow-sm text-ink dark:text-dark-ink placeholder-muted dark:placeholder-dark-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition duration-200 ease-in-out"
                                 placeholder="Email address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -111,7 +111,7 @@ export default function LoginPage() {
                                 type={showPassword ? "text" : "password"}
                                 autoComplete="current-password"
                                 required
-                                className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out"
+                                className="w-full px-4 py-2.5 bg-surface dark:bg-dark-surface border border-border dark:border-dark-border rounded-lg shadow-sm text-ink dark:text-dark-ink placeholder-muted dark:placeholder-dark-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition duration-200 ease-in-out"
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -127,7 +127,7 @@ export default function LoginPage() {
                     <div>
                         <button
                             type="submit"
-                            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed transition duration-200 ease-in-out"
+                            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:bg-primary disabled:cursor-not-allowed transition duration-200 ease-in-out"
                             disabled={isSubmitting}
                         >
                             {isSubmitting && (

@@ -30,7 +30,7 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#8a795f]">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)]">
         Jumat, 2 Oktober 2026
       </p>
       <h1 className="mt-2 font-serif text-3xl">Ringkasan operasional</h1>
@@ -50,29 +50,29 @@ export default function AdminDashboard() {
         ].map((stat) => (
           <article
             key={stat.label}
-            className="border border-[#dedbce] bg-[#fbfaf6] p-5"
+            className="border border-[var(--color-border)] bg-[var(--color-surface)] p-5"
           >
-            <p className="text-sm text-[#697166]">{stat.label}</p>
-            <p className="mt-3 font-serif text-3xl text-[#536b56]">
+            <p className="text-sm text-[var(--color-muted)]">{stat.label}</p>
+            <p className="mt-3 font-serif text-3xl text-[var(--color-primary)]">
               {stat.value}
             </p>
-            <p className="mt-2 text-xs text-[#8a795f]">{stat.note}</p>
+            <p className="mt-2 text-xs text-[var(--color-accent)]">{stat.note}</p>
           </article>
         ))}
       </div>
       <section className="mt-9">
         <div className="mb-4 flex items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8a795f]">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-accent)]">
               Hari ini
             </p>
             <h2 className="mt-1 font-serif text-2xl">Reservasi terbaru</h2>
           </div>
-          <span className="text-sm text-[#697166]">18 total</span>
+          <span className="text-sm text-[var(--color-muted)]">18 total</span>
         </div>
-        <div className="overflow-x-auto border border-[#dedbce] bg-[#fbfaf6]">
+        <div className="overflow-x-auto border border-[var(--color-border)] bg-[var(--color-surface)]">
           <table className="w-full min-w-[680px] text-left text-sm">
-            <thead className="bg-[#eeede3] text-xs uppercase tracking-[0.08em] text-[#697166]">
+            <thead className="bg-[var(--color-surface-muted)] text-xs uppercase tracking-[0.08em] text-[var(--color-muted)]">
               <tr>
                 <th className="px-4 py-3 font-semibold">Kode</th>
                 <th className="px-4 py-3 font-semibold">Tamu</th>
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
                 <th className="px-4 py-3 font-semibold">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#e5e2d6]">
+            <tbody className="divide-y divide-[var(--color-border)]">
               {reservations.map((reservation) => (
                 <tr key={reservation.code}>
                   <td className="px-4 py-4 font-medium">{reservation.code}</td>
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
                   <td className="px-4 py-4">{reservation.treatment}</td>
                   <td className="px-4 py-4">{reservation.time}</td>
                   <td className="px-4 py-4">
-                    <span className="inline-block bg-[#e8ecdf] px-2 py-1 text-xs text-[#536b56]">
+                    <span className="inline-block bg-[var(--color-success-soft)] px-2 py-1 text-xs text-[var(--color-primary)]">
                       {reservation.status}
                     </span>
                   </td>
@@ -105,14 +105,14 @@ export default function AdminDashboard() {
           {therapists.map((therapist) => (
             <div
               key={therapist.name}
-              className="flex items-center justify-between gap-3 border-t border-[#dedbce] py-4"
+              className="flex items-center justify-between gap-3 border-t border-[var(--color-border)] py-4"
             >
               <div>
                 <p className="text-sm font-semibold">{therapist.name}</p>
-                <p className="mt-1 text-xs text-[#788074]">{therapist.focus}</p>
+                <p className="mt-1 text-xs text-[var(--color-muted)]">{therapist.focus}</p>
               </div>
               <span
-                className={`text-xs ${therapist.state === "Tersedia" ? "text-[#536b56]" : "text-[#9a7555]"}`}
+                className={`text-xs ${therapist.state === "Tersedia" ? "text-[var(--color-primary)]" : "text-[var(--color-accent)]"}`}
               >
                 {therapist.state}
               </span>

@@ -21,8 +21,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
           onClick={() => onPageChange(i)}
           className={`px-3 py-1 mx-1 rounded-md ${
             i === currentPage
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              ? "bg-primary text-white"
+              : "bg-surface-muted text-ink hover:bg-border"
           }`}
         >
           {i}
@@ -39,8 +39,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         disabled={currentPage === 1}
         className={`px-4 py-2 rounded-md text-sm font-medium ${
           currentPage === 1
-            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-            : "bg-blue-500 text-white hover:bg-blue-600"
+            ? "bg-border text-muted cursor-not-allowed"
+            : "bg-primary text-white hover:bg-primary-hover"
         }`}
       >
         Sebelumnya
@@ -51,8 +51,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         disabled={currentPage === totalPages}
         className={`px-4 py-2 rounded-md text-sm font-medium ${
           currentPage === totalPages
-            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-            : "bg-blue-500 text-white hover:bg-blue-600"
+            ? "bg-border text-muted cursor-not-allowed"
+            : "bg-primary text-white hover:bg-primary-hover"
         }`}
       >
         Berikutnya
