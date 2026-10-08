@@ -8,6 +8,7 @@ import {
 } from 'react';
 import apiClient, { API_TOKEN_LS_KEY } from './ApiClient';
 
+/* eslint-disable react-refresh/only-export-components */
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -15,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         mutateUser();
-    }, []);
+    }, [mutateUser]);
 
     // fungsi untuk refresh data user saat ini
     const mutateUser = useCallback(async () => {
@@ -45,9 +46,12 @@ export const AuthProvider = ({ children }) => {
             await mutateUser();
         } catch (error) {
             console.error(error);
-            return { success: false, message: error.response.data.message };
+            return {
+                success: false,
+                message: error.response?.data?.message || 'Login gagal. Periksa koneksi dan kredensial Anda.',
+            };
         }
-    }, []);
+    }, [mutateUser]);
 
     // fungsi untuk melakukan logout
     const logout = useCallback(async () => {
@@ -57,9 +61,12 @@ export const AuthProvider = ({ children }) => {
             return { success: true, message: 'Logout berhasil' };
         } catch (error) {
             console.error(error);
-            return { success: false, message: error.response.data.message };
+            return {
+                success: false,
+                message: error.response?.data?.message || 'Logout gagal. Silakan coba lagi.',
+            };
         }
-    }, []);
+    }, [mutateUser]);
 
     const value = useMemo(() => ({
         user,

@@ -1,0 +1,232 @@
+# LAPORAN TUGAS TEKNOLOGI WEB
+
+## Aplikasi Reservasi Aroma Spa & Wellness
+
+### 1. Cover
+
+**LAPORAN TUGAS TEKNOLOGI WEB**  
+**Aplikasi Reservasi Aroma Spa & Wellness**
+
+Disusun oleh:
+
+- Nama: ........................................................
+- NIM: .........................................................
+- Kelas: .......................................................
+
+Program Studi ..................................................  
+Fakultas .......................................................  
+Nama Universitas ...............................................  
+Tahun 2026
+
+---
+
+## 2. Daftar Isi
+
+1. [Cover](#1-cover)
+2. [Daftar Isi](#2-daftar-isi)
+3. [BAB I – Pendahuluan](#3-bab-i--pendahuluan)
+4. [BAB II – Kajian Teori](#4-bab-ii--kajian-teori)
+5. [BAB III – Implementasi](#5-bab-iii--implementasi)
+6. [BAB IV – Penutup](#6-bab-iv--penutup)
+7. [Daftar Pustaka](#7-daftar-pustaka)
+8. [Lampiran](#8-lampiran-jika-ada)
+
+---
+
+## 3. BAB I – Pendahuluan
+
+### 1.1 Latar Belakang
+
+Aroma Spa & Wellness merupakan prototipe aplikasi web untuk membantu calon pelanggan mengenal layanan spa dan mengajukan permintaan reservasi. Aplikasi menyediakan katalog perawatan, pencarian dan penyaringan kategori, halaman detail layanan, daftar layanan tersimpan, serta formulir pemilihan jadwal. Antarmuka pengelola juga tersedia sebagai gambaran ringkasan operasional.
+
+Proyek ini dibuat sebagai penerapan materi pengembangan web menggunakan React. Implementasi mencakup komponen antarmuka, pengelolaan state, navigasi ant halaman, Context, penyimpanan data pada browser, dan contoh komunikasi dengan REST API.
+
+### 1.2 Rumusan Masalah
+
+1. Bagaimana menyajikan katalog layanan spa yang mudah ditelusuri?
+2. Bagaimana mengelola pilihan layanan dan alur permintaan jadwal?
+3. Bagaimana menerapkan React Context dan menghubungkan aplikasi dengan layanan API?
+4. Bagaimana merancang antarmuka yang konsisten dan dapat digunakan pada ukuran layar berbeda?
+
+### 1.3 Tujuan
+
+- Membangun antarmuka katalog layanan spa dengan React.
+- Menerapkan pencarian, filter kategori, detail layanan, dan daftar pilihan tersimpan.
+- Membuat alur formulir permintaan reservasi.
+- Menerapkan React Context untuk state lintas komponen dan menyediakan contoh integrasi API.
+- Menyusun antarmuka pelanggan dan halaman ringkasan pengelola.
+
+### 1.4 Ruang Lingkup
+
+Proyek yang tersedia berisi aplikasi frontend Aroma Spa & Wellness. Katalog dan ringkasan pengelola pada alur utama menggunakan data contoh. Daftar layanan yang disimpan dipertahankan melalui `localStorage`. Ada modul autentikasi dan modul produk berbasis API di source code, tetapi konfigurasi backend dan database tidak disertakan dalam repository ini. Karena itu, keberhasilan penyimpanan akun, produk, maupun reservasi pada database belum dapat diklaim dari implementasi frontend saja.
+
+---
+
+## 4. BAB II – Kajian Teori
+
+### 2.1 React dan Komponen
+
+React adalah pustaka JavaScript untuk membangun antarmuka dari komponen yang dapat digunakan kembali. Pada proyek ini, halaman dan elemen seperti navigasi, kartu layanan, sidebar, dan formulir disusun sebagai komponen terpisah. Data dan tampilan dihubungkan menggunakan props, state, serta hook React.
+
+### 2.2 Single-Page Application dan Routing
+
+Single-Page Application (SPA) memperbarui tampilan tanpa memuat ulang seluruh dokumen untuk setiap perpindahan halaman. `react-router-dom` digunakan untuk mengatur rute halaman beranda, detail perawatan, daftar tersimpan, jadwal, login, serta area admin.
+
+### 2.3 State dan React Context
+
+State menyimpan data yang dapat berubah selama aplikasi digunakan. React Context menyediakan cara berbagi nilai dan fungsi antarkomponen tanpa meneruskan props melalui setiap tingkat komponen.
+
+Proyek memiliki `CartContext` untuk mengelola layanan tersimpan dan `AuthContext` untuk status pengguna serta proses autentikasi. `ProductContext` menyediakan operasi produk dan kategori yang berkomunikasi dengan API. Penerapan dan keterhubungan masing-masing context dengan entry point aplikasi dijelaskan pada Bab III.
+
+### 2.4 REST API dan Pengelolaan Data Asinkron
+
+REST API memungkinkan frontend bertukar data dengan backend melalui HTTP. Axios digunakan sebagai HTTP client. `ProductContext` memanggil endpoint produk dan kategori serta menyediakan operasi tambah, ubah, dan hapus. React Query digunakan pada modul produk untuk mengambil serta menyegarkan data setelah perubahan.
+
+### 2.5 Penyimpanan Browser dan Database
+
+`localStorage` menyimpan data sebagai pasangan kunci dan nilai di browser dan dapat mempertahankannya setelah halaman dimuat ulang. Pada aplikasi ini, fitur tersebut digunakan untuk daftar layanan tersimpan, bukan sebagai pengganti database server.
+
+Database server berada di sisi backend. Source frontend mengarah ke endpoint API lokal, tetapi tidak berisi konfigurasi maupun skema database. Jenis database, tabel, dan mekanisme persistensi backend perlu dikonfirmasi dari proyek backend sebelum dicantumkan sebagai fakta.
+
+### 2.6 Prinsip Antarmuka Responsif
+
+Antarmuka responsif menyesuaikan tata letak terhadap lebar layar. Proyek menggunakan utility class Tailwind CSS untuk mengatur grid, jarak, ukuran teks, breakpoint, warna, dan state interaksi seperti hover serta focus.
+
+---
+
+## 5. BAB III – Implementasi
+
+### 3.1 Tech Stack
+
+| Teknologi | Pemakaian |
+|---|---|
+| React 19 | Komponen dan antarmuka aplikasi |
+| Vite | Development server dan proses build frontend |
+| Tailwind CSS 4 | Styling dan tata letak responsif |
+| React Router DOM 7 | Routing halaman SPA |
+| React Context | State daftar tersimpan, autentikasi, dan produk |
+| Axios | Komunikasi HTTP dengan backend API |
+| TanStack React Query | Pengambilan dan invalidasi cache data produk pada modul API |
+| `localStorage` | Persistensi daftar layanan tersimpan pada browser |
+
+### 3.2 Struktur dan Fitur Aplikasi
+
+#### A. Halaman pelanggan
+
+- **Beranda:** menampilkan pengantar, katalog perawatan, kolom pencarian nama, dan filter kategori.
+- **Detail perawatan:** menampilkan kategori, durasi, deskripsi, fasilitas yang termasuk, dan harga.
+- **Saved:** menampilkan layanan yang dipilih serta menyediakan aksi menghapus pilihan.
+- **Jadwal:** menyediakan formulir nama, nomor telepon, tanggal, dan jam kedatangan, disertai ringkasan layanan dan perkiraan total.
+- **Login:** menyediakan input email dan kata sandi, tombol tampil/sembunyikan kata sandi, serta penanganan status proses dan pesan error dari alur autentikasi.
+
+#### B. Halaman pengelola
+
+Halaman admin menyediakan sidebar menuju ringkasan reservasi dan profil operasional. Ringkasan menampilkan contoh statistik, daftar reservasi, dan ketersediaan terapis. Data yang tampak pada halaman ringkasan saat ini merupakan data statis untuk keperluan prototipe.
+
+### 3.3 Implementasi React Context dan Data
+
+#### CartContext
+
+`CartProvider` membagikan daftar layanan tersimpan dan fungsi untuk menambah, mengubah jumlah, menghapus, serta mengosongkan daftar. Data dibaca dari dan ditulis ke `localStorage` menggunakan kunci `aroma-spa-booking`. Dengan demikian, pilihan dapat bertahan setelah browser memuat ulang aplikasi.
+
+#### AuthContext
+
+`AuthProvider` menyediakan data pengguna, status pemuatan, dan fungsi login/logout. Implementasinya memanggil endpoint `/user` dan `/login`, serta menyimpan token API pada `localStorage`. Fitur ini membutuhkan backend yang berjalan dan menerima kontrak endpoint tersebut. Pada konfigurasi saat ini, provider dipasang pada rute login; integrasi autentikasi lintas rute dan perlindungan akses admin masih perlu disempurnakan.
+
+#### ProductContext dan API
+
+`ProductContext` berisi operasi untuk mengambil daftar/detail produk, menambah dan mengubah produk, menghapus produk, serta mengambil kategori. Axios diarahkan ke `http://127.0.0.1:8000/api`. Modul tersebut merupakan jalur integrasi backend yang disiapkan dalam source code, bukan bukti bahwa database tertentu sudah terhubung dan berfungsi.
+
+Pada entry point aplikasi utama, `ProductProvider` dan `QueryClientProvider` belum dipasang. Karena itu, jalur UI utama yang berjalan tidak menggunakan context produk tersebut. Backend, jenis database, skema tabel, dan keberhasilan operasi CRUD harus diverifikasi terpisah sebelum menyatakan integrasi database telah selesai.
+
+#### Penyimpanan reservasi
+
+Form jadwal saat ini membuat konfirmasi pada sisi frontend dan mengosongkan daftar pilihan. Data reservasi tidak dikirim ke API atau disimpan secara permanen. Nomor telepon juga belum ditampilkan pada konfirmasi. Agar reservasi tercatat di database, diperlukan endpoint backend dan integrasi submit yang sesuai.
+
+### 3.4 User Flow
+
+#### Flow pelanggan
+
+1. Pengguna membuka beranda dan melihat katalog perawatan.
+2. Pengguna mencari layanan atau memilih kategori.
+3. Pengguna membuka detail layanan untuk melihat deskripsi, durasi, fasilitas, dan harga.
+4. Pengguna menyimpan satu atau beberapa layanan ke halaman **Saved**.
+5. Pengguna meninjau dan, bila perlu, menghapus layanan tersimpan.
+6. Pengguna memilih **Jadwal**, mengisi data kontak dan waktu kedatangan, lalu mengirim permintaan.
+7. Aplikasi menampilkan konfirmasi frontend dan mengosongkan daftar layanan tersimpan.
+
+#### Flow pengelola dan autentikasi
+
+Pengguna dapat membuka rute login untuk mengirim kredensial ke API. Berdasarkan respons pengguna, kode login mengarahkan role admin ke `/admin/dashboard` dan role lain ke beranda. Area admin juga dapat diakses melalui rute `/admin/dashboard` pada konfigurasi saat ini. Proteksi akses rute admin perlu ditambahkan sebelum aplikasi digunakan untuk operasional nyata.
+
+### 3.5 UI dan Pengalaman Pengguna
+
+Desain menggunakan identitas visual yang terinspirasi suasana wellness: warna hijau sebagai warna utama, latar krem, aksen cokelat, dan tipografi serif untuk judul. Katalog disusun dalam kartu dengan gambar, kategori, durasi, ringkasan, harga, dan aksi. Halaman detail memisahkan informasi utama dengan fasilitas layanan. Form reservasi menggunakan label input dan validasi browser dasar, termasuk tanggal minimum, pilihan jam, serta pola nomor telepon.
+
+Layout menggunakan breakpoint Tailwind untuk menyusun ulang navigasi, kartu, dan formulir pada layar sempit maupun lebar. Beberapa gambar menggunakan URL Unsplash, sehingga gambar tersebut memerlukan koneksi internet.
+
+### 3.6 Bagian Paling Kompleks
+
+Bagian yang paling kompleks adalah alur state lintas halaman untuk pilihan layanan. Item yang ditambahkan dari kartu beranda atau halaman detail perlu tersedia pada halaman Saved dan Jadwal, tetap tersimpan setelah reload, memiliki aksi hapus, dan ikut dihitung dalam ringkasan harga. Penggunaan Context menghindari pengiriman state melalui banyak tingkat komponen, sementara `localStorage` mempertahankan state di browser.
+
+Integrasi autentikasi dan produk juga melibatkan request asinkron, token, penanganan error, serta cache data. Namun, integrasi ini bergantung pada backend dan konfigurasi provider yang belum lengkap pada aplikasi utama.
+
+### 3.7 Hal yang Dikerjakan dan Dipelajari
+
+- Menyusun halaman React dari komponen-komponen terpisah.
+- Mengelola input pencarian dan filter menggunakan state.
+- Mengatur navigasi SPA menggunakan route dan link.
+- Berbagi state aplikasi menggunakan React Context.
+- Menyimpan pilihan sementara di browser menggunakan `localStorage`.
+- Membuat form dengan validasi input dasar dan state konfirmasi.
+- Mengenal pola komunikasi frontend-backend melalui REST API, Axios, dan React Query.
+- Menerapkan utility CSS dan breakpoint untuk antarmuka responsif.
+- Memahami pentingnya membedakan data contoh, data browser, dan data yang benar-benar tersimpan di database server.
+
+### 3.8 Catatan Pengembangan Lanjutan
+
+1. Menyediakan backend aktif, mendokumentasikan skema database, dan memastikan endpoint API sesuai dengan frontend.
+2. Memasang `ProductProvider` dan `QueryClientProvider` pada aplikasi utama bila halaman produk berbasis API akan digunakan.
+3. Mengirim data reservasi ke backend dan menampilkan status hasil penyimpanan dari server.
+4. Memasang autentikasi secara konsisten pada seluruh rute yang memerlukannya serta melindungi rute admin berdasarkan role.
+5. Mengganti data statis pada dashboard admin dengan data API.
+6. Menambahkan status loading dan error yang konsisten pada setiap pengambilan data.
+
+---
+
+## 6. BAB IV – Penutup
+
+### 4.1 Kesimpulan
+
+Aplikasi Aroma Spa & Wellness telah menyediakan prototipe frontend untuk menelusuri layanan, mencari dan memfilter katalog, melihat detail, menyimpan pilihan, serta mengajukan jadwal melalui formulir. Proyek menerapkan React, routing SPA, React Context, persistensi browser, dan modul komunikasi REST API.
+
+Integrasi database dan proses reservasi server belum dapat dinyatakan selesai berdasarkan repository frontend ini. Modul API produk dan autentikasi memerlukan backend yang sesuai, sementara provider produk, proteksi rute admin, serta penyimpanan reservasi masih perlu dilengkapi dan diuji.
+
+### 4.2 Saran
+
+Pengembangan berikutnya disarankan menyelesaikan integrasi backend dan database, memastikan seluruh provider terpasang pada aplikasi utama, melindungi akses admin, dan menguji user flow dari awal hingga data reservasi benar-benar tersimpan. Materi/checklist Modul 1 sampai Modul 2.5 dapat digunakan untuk mencocokkan setiap kriteria tugas secara spesifik.
+
+---
+
+## 7. Daftar Pustaka
+
+1. React. “Quick Start.” Dokumentasi React. [https://react.dev/learn](https://react.dev/learn)
+2. React Router. “React Router Documentation.” [https://reactrouter.com/](https://reactrouter.com/)
+3. TanStack. “TanStack Query Documentation.” [https://tanstack.com/query/latest/docs/framework/react/overview](https://tanstack.com/query/latest/docs/framework/react/overview)
+4. Axios. “Axios Documentation.” [https://axios-http.com/docs/intro](https://axios-http.com/docs/intro)
+5. MDN Web Docs. “Window: localStorage property.” [https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+6. Tailwind CSS. “Documentation.” [https://tailwindcss.com/docs](https://tailwindcss.com/docs)
+
+**Link GitHub:** [https://github.com/Boyssfit/Tugas-FrontEnd](https://github.com/Boyssfit/Tugas-FrontEnd)
+
+---
+
+## 8. Lampiran (Jika Ada)
+
+Lampiran yang dapat ditambahkan pada versi akhir laporan:
+
+- Screenshot halaman beranda, detail layanan, Saved, Jadwal, login, dan dashboard admin.
+- Diagram alur pengguna.
+- Bukti pengujian fitur.
+- Dokumentasi endpoint dan skema database setelah backend tersedia.
+- Materi atau checklist resmi Modul 1 sampai Modul 2.5 untuk pemetaan kriteria tugas.

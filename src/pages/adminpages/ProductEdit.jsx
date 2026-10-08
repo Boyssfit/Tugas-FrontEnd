@@ -33,13 +33,13 @@ export default function ProductEdit() {
           category_id: res.category_id || 1,
           img: res.img_url || null,
         });
-      } catch (err) {
+      } catch {
         toast.error("Gagal memuat data produk.");
       }
     };
     fetchProduct();
   }, [id, getProductById]);
-// fungsi untuk menangani perubahan input, dan memperbarui formData
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData({
@@ -48,25 +48,17 @@ export default function ProductEdit() {
     });
   };
 
-  const handleSubmit2 = (e) => {
-    e.preventDefault();
-    const payload = new FormData();
-    Object.entries(formData).forEach(([key, val]) => payload.append(key, val));
-    addProduct.mutate(payload);
-  };
-  // fungsi untuk menangani submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
 
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, value);
+      if (key !== "img") data.append(key, value);
     });
+    if (formData.img instanceof File) data.append("img", formData.img);
 
     try {
-      console.log("Updating product with ID:", id);
-      // panggil addProduct dan menyimpan response
       const response = await updateProduct(id, data);
       if (response.status === 200) {
         toast.success("Produk berhasil diperbarui!");
@@ -90,7 +82,7 @@ export default function ProductEdit() {
   className="max-w-md mx-auto bg-surface shadow-md rounded-2xl p-6 space-y-4"
 >
   <h2 className="text-xl font-semibold text-ink mb-4 border-b pb-2">
-    Tambah Produk
+    Edit Produk
   </h2>
 
   <div className="flex flex-col">
@@ -192,7 +184,7 @@ export default function ProductEdit() {
     type="submit"
     className="w-full cursor-pointer bg-primary hover:bg-primary-hover text-white font-semibold py-2 rounded-lg transition duration-200"
   >
-    Simpan Produk
+    Perbarui Produk
   </button>
 </form>
 

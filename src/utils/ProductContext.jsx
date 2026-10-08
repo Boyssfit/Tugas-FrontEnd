@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "./ApiClient";
 
-// Buat konteks
+/* eslint-disable react-refresh/only-export-components */
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
@@ -25,44 +25,37 @@ export const ProductProvider = ({ children }) => {
   };
 //store product
   const addProduct = async (formData) => {
-    try {
-      const response = await apiClient.post("/products", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      queryClient.invalidateQueries(["products"]);
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await apiClient.post("/products", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    await queryClient.invalidateQueries({ queryKey: ["products"] });
+    return response;
   };
 
-  // UPDATE PRODUCT
-   const updateProduct = async (id, formData) => {
-    try {
-      const response = await apiClient.post(`/products/${id}?_method=PUT`, formData, {
+  const updateProduct = async (id, formData) => {
+    const response = await apiClient.post(
+      `/products/${id}?_method=PUT`,
+      formData,
+      {
         headers: { "Content-Type": "multipart/form-data" },
-      });
-      queryClient.invalidateQueries(["products"]);
-      return response;
-    } catch (error) {
-      throw error;
-    }
+      },
+    );
+    await queryClient.invalidateQueries({ queryKey: ["products"] });
+    return response;
   };
-  
 
-  // DELETE PRODUCT
   const deleteProduct = useMutation({
-    mutationFn: async (id) => await apiClient.delete(`/products/${id}`),
+    mutationFn: (id) => apiClient.delete(`/products/${id}`),
     onSuccess: () => {
-      queryClient.invalidateQueries(["products"]);
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
-   // SHOW CATEGORY DETAIL
+
   const getCategories = async () => {
     const res = await apiClient.get("/categories");
     return res.data;
   };
-// ExportPROVIDER
+
   return (
     <ProductContext.Provider
       value={{
@@ -73,8 +66,7 @@ export const ProductProvider = ({ children }) => {
         addProduct,
         updateProduct,
         deleteProduct,
-        //get categories
-        getCategories
+        getCategories,
       }}
     >
       {children}
