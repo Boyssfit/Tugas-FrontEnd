@@ -7,6 +7,7 @@ import Dashboard from "./pages/frontpages/Dashboard";
 import ProductDetail from "./pages/frontpages/ProductDetail";
 import Cart from "./pages/frontpages/Cart";
 import Checkout from "./pages/frontpages/Checkout";
+import Bookings from "./pages/frontpages/Bookings";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./utils/AuthContext";
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="product/:id" element={<ProductDetail />} />
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
+        <Route path="bookings" element={<Bookings />} />
         <Route
           path="login"
           element={

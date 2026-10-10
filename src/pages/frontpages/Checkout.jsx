@@ -31,19 +31,33 @@ const arrivalTimes = [
 ];
 
 export default function Checkout() {
-  const { cart, clearCart } = useCart();
+  const { cart, clearCart, addBooking } = useCart();
   const [confirmation, setConfirmation] = useState(null);
+  const [submitError, setSubmitError] = useState("");
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    setConfirmation({
+    const booking = {
       name: formData.get("name"),
+      phone: formData.get("phone"),
       date: formData.get("date"),
       time: formData.get("time"),
-      items: cart.length,
-    });
+      items: cart.map(({ id, name, price }) => ({ id, name, price })),
+      total,
+      status: "Menunggu konfirmasi",
+    };
+
+    try {
+      addBooking(booking);
+    } catch (error) {
+      setSubmitError(error.message);
+      return;
+    }
+
+    setConfirmation(booking);
+    setSubmitError("");
     clearCart();
   };
 
@@ -57,15 +71,15 @@ export default function Checkout() {
           Terima kasih, {confirmation.name}.
         </h1>
         <p className="mt-4 text-sm leading-6 text-[var(--color-muted)]">
-          Permintaan reservasi untuk {confirmation.items} paket pada{" "}
+          Permintaan reservasi untuk {confirmation.items.length} paket pada{" "}
           {confirmation.date}, pukul {confirmation.time} telah dicatat. Tim kami
           akan menghubungi Anda untuk konfirmasi ketersediaan.
         </p>
         <Link
-          to="/"
+          to="/bookings"
           className="mt-7 inline-flex min-h-11 items-center bg-[var(--color-primary)] px-5 text-sm font-semibold text-white hover:bg-[var(--color-primary-hover)]"
         >
-          Kembali ke perawatan
+          Lihat jadwal reservasi
         </Link>
       </section>
     );
@@ -186,6 +200,11 @@ export default function Checkout() {
           >
             Kirim permintaan reservasi
           </button>
+          {submitError && (
+            <p role="alert" className="text-sm text-[var(--color-danger)]">
+              {submitError}
+            </p>
+          )}
         </form>
         <aside className="h-fit border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
           <h2 className="font-serif text-xl">Paket pilihan</h2>

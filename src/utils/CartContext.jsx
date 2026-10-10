@@ -3,6 +3,19 @@ import { createContext, useContext, useEffect, useState } from "react";
 /* eslint-disable react-refresh/only-export-components */
 const CartContext = createContext();
 
+const BOOKINGS_STORAGE_KEY = "aroma-spa-reservations";
+
+const loadBookings = () => {
+  try {
+    const storedBookings = localStorage.getItem(BOOKINGS_STORAGE_KEY);
+    const parsedBookings = storedBookings ? JSON.parse(storedBookings) : [];
+    return Array.isArray(parsedBookings) ? parsedBookings : [];
+  } catch (error) {
+    console.error("Failed to load spa reservations", error);
+    return [];
+  }
+};
+
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
     try {
@@ -14,6 +27,7 @@ export function CartProvider({ children }) {
       return [];
     }
   });
+  const [bookings, setBookings] = useState(loadBookings);
 
   useEffect(() => {
     try {
@@ -47,6 +61,29 @@ export function CartProvider({ children }) {
 
   const clearCart = () => setCart([]);
 
+  const addBooking = (booking) => {
+    const newBooking = {
+      ...booking,
+      id: `AR-${Date.now()}`,
+    };
+    const updatedBookings = [newBooking, ...bookings];
+
+    try {
+      localStorage.setItem(
+        BOOKINGS_STORAGE_KEY,
+        JSON.stringify(updatedBookings),
+      );
+    } catch (error) {
+      console.error("Failed to save spa reservation", error);
+      throw new Error("Jadwal reservasi gagal disimpan. Silakan coba lagi.", {
+        cause: error,
+      });
+    }
+
+    setBookings(updatedBookings);
+    return newBooking;
+  };
+
   const totalQty = cart.length;
 
   return (
@@ -57,6 +94,8 @@ export function CartProvider({ children }) {
         updateQty,
         removeFromCart,
         clearCart,
+        bookings,
+        addBooking,
         totalQty,
       }}
     >

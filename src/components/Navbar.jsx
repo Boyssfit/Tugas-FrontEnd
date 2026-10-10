@@ -9,7 +9,7 @@ const navLinkClass = ({ isActive }) =>
   }`;
 
 export default function Navbar() {
-  const { totalQty } = useCart();
+  const { totalQty, bookings } = useCart();
   return (
     <nav className="border-b border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)]">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
@@ -42,8 +42,18 @@ export default function Navbar() {
               </span>
             )}
           </NavLink>
-          <NavLink to="/checkout" className={navLinkClass}>
+          <NavLink
+            to="/bookings"
+            className={(props) =>
+              `${navLinkClass(props)} inline-flex items-center gap-2`
+            }
+          >
             Jadwal
+            {bookings.length > 0 && (
+              <span className="grid h-5 min-w-5 place-items-center rounded-full bg-[var(--color-primary)] px-1 text-xs text-white">
+                {bookings.length}
+              </span>
+            )}
           </NavLink>
           <NavLink
             to="/login"
