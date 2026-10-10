@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import AdminDashboard from "./pages/adminpages/AdminDashboard";
 import AdminLayout from "./layouts/AdminLayout";
 import AboutPage from "./pages/adminpages/AboutPage";
@@ -28,6 +28,7 @@ export default function App() {
         />
       </Route>
       <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="about" element={<AboutPage />} />
       </Route>
