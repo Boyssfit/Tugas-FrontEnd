@@ -68,16 +68,28 @@ export default function ProductDetail() {
             <span className="font-serif text-2xl text-[var(--color-primary)]">
               {formatPrice(service.price)}
             </span>
-            <button
-              type="button"
-              onClick={() => {
-                addToCart(service);
-                navigate("/cart");
-              }}
-              className="min-h-12 bg-[var(--color-primary)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)]"
-            >
-              Simpan ke Saved
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  addToCart(service);
+                  navigate("/checkout");
+                }}
+                className="min-h-12 bg-[var(--color-primary)] px-6 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)]"
+              >
+                Reservasi sekarang
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  addToCart(service);
+                  navigate("/cart");
+                }}
+                className="min-h-12 border border-[var(--color-border)] px-6 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:bg-[var(--color-surface-muted)]"
+              >
+                Simpan ke Saved
+              </button>
+            </div>
           </div>
         </div>
       </article>
